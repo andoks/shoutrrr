@@ -136,7 +136,7 @@ var serviceMap = map[string]func() t.Service{
 	"discord":    func() t.Service { return &discord.Service{} },
 	"pushover":   func() t.Service { return &pushover.Service{} },
 	"slack":      func() t.Service { return &slack.Service{} },
-	"teams":      func() t.Service { return &teams.Service{} },
+	teams.Scheme: func() t.Service { return &teams.Service{} },
 	"telegram":   func() t.Service { return &telegram.Service{} },
 	"smtp":       func() t.Service { return &smtp.Service{} },
 	"ifttt":      func() t.Service { return &ifttt.Service{} },

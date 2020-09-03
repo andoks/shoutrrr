@@ -10,31 +10,18 @@ import (
 type Config struct {
 	standard.QuerylessConfig
 	standard.EnumlessConfig
-	Token Token
+	URL url.URL
 }
 
 // GetURL returns a URL representation of it's current field values
 func (config *Config) GetURL() *url.URL {
-	return &url.URL{
-		User:       url.UserPassword(config.Token.A, config.Token.B),
-		Host:       config.Token.C,
-		Scheme:     Scheme,
-		ForceQuery: false,
-	}
+	return &config.URL
 }
 
 // SetURL updates a ServiceConfig from a URL representation of it's field values
 func (config *Config) SetURL(url *url.URL) error {
-
-	tokenA := url.User.Username()
-	tokenB, _ := url.User.Password()
-	tokenC := url.Hostname()
-
-	config.Token = Token{
-		A: tokenA,
-		B: tokenB,
-		C: tokenC,
-	}
+	url.Scheme = "https"
+	config.URL = *url
 	return nil
 }
 
@@ -47,5 +34,5 @@ func (service *Service) CreateConfigFromURL(url *url.URL) (*Config, error) {
 
 const (
 	// Scheme is the identifying part of this service's configuration URL
-	Scheme = "teams"
+	Scheme = "teams+https"
 )
